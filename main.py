@@ -21,7 +21,7 @@ if prompt:
     ## with notation allows for the spinner to dissapear after code inside is finished
     with st.spinner("Generating Response"):
         generated_response = run_llm(
-            query=prompt, chat_history=st.session_state["chat_history"]
+            query=prompt
         )
 
 
