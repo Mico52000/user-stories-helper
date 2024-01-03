@@ -8,6 +8,7 @@ from langchain.chains import ConversationChain
 import typing
 
 from langchain.memory import ConversationBufferWindowMemory, ConversationSummaryBufferMemory
+from langchain_community.chat_models import ChatOpenAI
 
 load_dotenv()
 
@@ -35,7 +36,31 @@ conversation = ConversationChain(
     llm=llm,
     memory=memory
 )
-def run_llm(query: str) -> any:
+def run_llm(query: str, selected_llm_option: int) -> any:
+    print(selected_llm_option)
+    if selected_llm_option == 1:
+        llm = LlamaCpp(
+            model_path=llm_path,
+            temperature=0,
+            n_gpu_layers=n_gpu_layers,
+            n_batch=n_batch,
+            max_tokens=1000,
+            n_ctx=2048,
+
+
+            verbose=True,  # Verbose is required to pass to the callback manager
+        )
+    elif selected_llm_option == 2:
+        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
+
+    elif selected_llm_option == 3:
+        llm = ChatOpenAI(temperature=0,model='gpt-4')
+    else:
+        llm =  ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
+
+    print(llm)
+    conversation.llm = llm
+
 
 
 
